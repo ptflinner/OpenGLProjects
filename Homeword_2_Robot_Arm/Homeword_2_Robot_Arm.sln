@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Homeword_2_Robot_Arm", "Homeword_2_Robot_Arm\Homeword_2_Robot_Arm.vcxproj", "{6710AFBF-17E7-454A-87BF-C37E73FBC13A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6710AFBF-17E7-454A-87BF-C37E73FBC13A}.Debug|x64.ActiveCfg = Debug|x64
+		{6710AFBF-17E7-454A-87BF-C37E73FBC13A}.Debug|x64.Build.0 = Debug|x64
+		{6710AFBF-17E7-454A-87BF-C37E73FBC13A}.Debug|x86.ActiveCfg = Debug|Win32
+		{6710AFBF-17E7-454A-87BF-C37E73FBC13A}.Debug|x86.Build.0 = Debug|Win32
+		{6710AFBF-17E7-454A-87BF-C37E73FBC13A}.Release|x64.ActiveCfg = Release|x64
+		{6710AFBF-17E7-454A-87BF-C37E73FBC13A}.Release|x64.Build.0 = Release|x64
+		{6710AFBF-17E7-454A-87BF-C37E73FBC13A}.Release|x86.ActiveCfg = Release|Win32
+		{6710AFBF-17E7-454A-87BF-C37E73FBC13A}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {05826276-3D8A-4104-A41E-E926675E6722}
+	EndGlobalSection
+EndGlobal
