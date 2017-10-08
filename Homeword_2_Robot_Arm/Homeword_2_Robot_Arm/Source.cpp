@@ -1,13 +1,6 @@
 //Patrick Flinner
 //304607711
 
-#include <windows.h>  //suitable when using Windows 95/98/NT
-#include <gl/Gl.h>
-#include <gl/Glu.h>
-#include <gl/glut.h>
-#include <iostream>
-
-
 #include "Source.h"
 
 void myInit(int shadingChoice, int colorChoice)
@@ -21,21 +14,11 @@ void myInit(int shadingChoice, int colorChoice)
 	glLightfv(GL_LIGHT0, GL_POSITION, position);
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, lightIntensity);
 
-	if (shadingChoice == 0) {
-		glMaterialfv(GL_FRONT, GL_AMBIENT, ambient);
-		glMaterialfv(GL_FRONT, GL_DIFFUSE, diffuse);
-	}
-	else if (shadingChoice == 1) {
-		glMaterialfv(GL_FRONT, GL_SPECULAR, specular);
-		glMaterialfv(GL_FRONT, GL_SHININESS, shininess);
+	glMaterialfv(GL_FRONT, GL_SPECULAR, specular);
+	glMaterialfv(GL_FRONT, GL_SHININESS, shininess);
 
-	}
-
-	if (colorChoice == 1) {
-		glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
-		glEnable(GL_COLOR_MATERIAL);
-	}
-
+	glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
+	glEnable(GL_COLOR_MATERIAL);
 
 	glClearColor(1.0f, 1.0f, 1.0f, 0.0f);  // background is white
 
@@ -63,63 +46,17 @@ void drawAxes()
 	glEnd();
 }
 
-void drawSun()
-{	// Sun
-	glPushMatrix();
-	glRotatef(sunRotation, 0, 1, 0);
-	glColor3f(1.0f, 0.5f, 0.0f);    // sun is orange
-	glutSolidSphere(0.5, 20, 16);	// locate the sun at the origin
-	glPopMatrix();
+void drawBase() {
+
 }
-
-void drawEarthAndMoon()
-{
-	// Earth
-	glColor3f(0.0f, 1.0f, 0.0f); // earth is green
-	glPushMatrix();
-	glRotatef(earthRotation, 0, 1, 0);
-	glTranslated(0, 0, 2);
-	// Moon
-	glColor3f(0.5f, 0.5f, 0.5f);
-	glPushMatrix();
-
-	glRotatef(moonRotation, 0, 1, 0);
-	glTranslated(0, 0, .3);
-	glRotatef(moonRevolution, 0, 1, 0);
-	glutSolidSphere(0.05, 10, 4);
-	glPopMatrix();
-
-
-	glRotatef(earthRevolution, 0, 1, 0);
-	glutSolidSphere(0.2, 20, 8);
-	glPopMatrix();
-}
-
-void drawMars()
-{
-	// Mars
-	glColor3f(1.0f, 0.0f, 0.0f);
-	glPushMatrix();
-	glRotatef(marsRotation, 0, 1, 0);
-	glTranslated(0, 0, 3);
-	glRotatef(marsRevolution, 0, 1, 0);
-	glutSolidSphere(0.15, 20, 8);
-	glPopMatrix();
-}
-
-
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<< displayWire >>>>>>>>>>>>>>>>>>>>>>
-void displaySolarSystem()
+void displayRobotArm()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);     // clear the screen
 	glMatrixMode(GL_MODELVIEW); // position and aim the camera
 	glLoadIdentity();
 	gluLookAt(eyex, eyey, eyez, lookx, looky, lookz, 0.0, 1.0, 0.0);
 	glPushMatrix();
-	drawAxes();
-	drawSun();
-	drawEarthAndMoon();
-	drawMars();
 	glPopMatrix();
 	glutSwapBuffers();
 }
@@ -158,22 +95,6 @@ void myKeyboard(unsigned char key, int x, int y)
 }
 void myIdle() {
 
-	if (!rotateCamera) {
-		sunRotation += 10;
-		earthRotation += 1;
-		earthRevolution += 2;
-		moonRotation += 2;
-		moonRevolution += 4;
-		marsRotation += .5;
-		marsRevolution += 1;
-
-	}
-	else {
-
-		eyex = centerX + width * cos(2 * PI*i);
-		eyez = centerY + height * sin(2 * PI*i);
-		i += 50;
-	}
 	glutPostRedisplay();
 }
 //<<<<<<<<<<<<<<<<<<<<<< main >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -196,7 +117,7 @@ int main(int argc, char **argv)
 
 	myInit(shadingChoice, colorChoice);
 
-	glutDisplayFunc(displaySolarSystem);
+	glutDisplayFunc(displayRobotArm);
 	glutKeyboardFunc(myKeyboard);
 
 	glutMainLoop();

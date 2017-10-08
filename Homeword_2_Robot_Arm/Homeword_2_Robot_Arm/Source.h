@@ -1,5 +1,9 @@
-#ifndef LAB_SOLAR_H
-#define LAB_SOLAR_H
+
+#include <windows.h>  
+#include <gl/Gl.h>
+#include <gl/Glu.h>
+#include <gl/glut.h>
+#include <iostream>
 
 
 #define PI 3.1415
@@ -7,8 +11,6 @@
 
 //Global Variables
 const int screenWidth = 500;	   // width of screen window in pixels
-								   //Patrick Flinner
-								   //304607711
 
 const int screenHeight = 500;	   // height of screen window in pixels
 
@@ -35,14 +37,6 @@ GLfloat shininess[] = { 50.0f };
 GLfloat position[] = { 2.0f, 6.0f, 3.0f, 0.0f };
 GLfloat lightIntensity[] = { 0.7f, 0.7f, 0.7f, 1.0f };
 
-GLfloat sunRotation = 0.0f;
-GLfloat earthRotation = 0.0f;
-GLfloat moonRotation = 0.0f;
-GLfloat marsRotation = 0.0f;
-GLfloat earthRevolution = 0.0f;
-GLfloat moonRevolution = 0.0f;
-GLfloat marsRevolution = 0.0f;
-
 GLfloat centerX = 0.5;
 GLfloat centerY = 20;
 GLfloat centerZ = 16;
@@ -51,4 +45,3 @@ float height = 50;
 float width = 70;
 float i = 0;
 bool rotateCamera = false;
-#endif

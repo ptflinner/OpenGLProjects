@@ -113,10 +113,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Arm.cpp" />
+    <ClCompile Include="Finger.cpp" />
+    <ClCompile Include="Hand.cpp" />
+    <ClCompile Include="LeftArm.cpp" />
     <ClCompile Include="Source.cpp" />
+    <ClCompile Include="Thumb.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Arm.h" />
+    <ClInclude Include="Finger.h" />
+    <ClInclude Include="Hand.h" />
+    <ClInclude Include="LeftArm.h" />
     <ClInclude Include="Source.h" />
+    <ClInclude Include="Thumb.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
