@@ -69,8 +69,7 @@ void displayRobotArm()
 	gluLookAt(eyex, eyey, eyez, lookx, looky, lookz, 0.0, 1.0, 0.0);
 	glPushMatrix();
 	drawAxes();
-
-	hand.DrawHand();
+	arm.DrawArm();
 	glPopMatrix();
 	glutSwapBuffers();
 }
@@ -100,6 +99,7 @@ void drawBase() {
 //<<<<<<<<<< USER INPUT FUNCTIONS >>>>>>>>>>
 void myKeyboard(unsigned char key, int x, int y)
 {
+	Hand hand=arm.GetHand();
 	switch (key) {
 	case 'v':
 		view++;
@@ -121,16 +121,34 @@ void myKeyboard(unsigned char key, int x, int y)
 		}
 		break;
 	case 'm':
-		hand.CloseHand();
+		arm.CloseHand();
 		break;
 	case 'M':
-		hand.OpenHand();
+		arm.OpenHand();
 		break;
 	case 'n':
-		hand.RotateWristDownX();
+		arm.RotateWristDownX();
 		break;
 	case 'N':
-		hand.RotateWristUpX();
+		arm.RotateWristUpX();
+		break;
+	case 'i':
+		arm.RotateShoulderDown();
+		break;
+	case 'I':
+		arm.RotateShoulderUp();
+		break;
+	case 'j':
+		arm.RotateElbowDown();
+		break;
+	case 'J':
+		arm.RotateElbowUp();
+		break;
+	case 'r':
+		arm.RotateShoulderClockWise();
+		break;
+	case 'R':
+		arm.RotateShoulderCounterClockWise();
 		break;
 	default:
 		break;

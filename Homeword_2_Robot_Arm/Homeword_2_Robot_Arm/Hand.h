@@ -15,11 +15,21 @@ public:
 	void CloseHand();
 	void OpenHand();
 	void DrawHand();
+
+	//Getters
+	Finger GetPinky();
+	Finger GetRing();
+	Finger GetMiddle();
+	Finger GetIndex();
+
+	GLfloat GetRadius();
+	//Operator Overload
+	void operator=(Hand& rhs);
 private:
-	const GLfloat xStartLimit=0;
-	const GLfloat xEndLimit = 90;
-	const GLfloat zStartLimit = 0;
-	const GLfloat zEndLimit = 90;
+	const GLfloat XSTARTLIMIT =0;
+	const GLfloat XENDLIMIT = 45;
+	const GLfloat ZSTARTLIMIT = 0;
+	const GLfloat ZENDLIMIT = 90;
 	Finger pinky;
 	Finger ring;
 	Finger middle;

@@ -27,28 +27,28 @@ Hand::~Hand()
 
 void Hand::RotateWristUpX()
 {
-	if (wristRotationX-5 >= 0) {
+	if (wristRotationX-5 >= XSTARTLIMIT) {
 		wristRotationX -= 5;
 	}
 }
 
 void Hand::RotateWristDownX()
 {
-	if (wristRotationX <= 90) {
+	if (wristRotationX <= XENDLIMIT) {
 		wristRotationX += 5;
 	}
 }
 
 void Hand::RotateWristUpZ()
 {
-	if (wristRotationZ >= 0) {
+	if (wristRotationZ >= ZSTARTLIMIT) {
 		wristRotationZ -= 5;
 	}
 }
 
 void Hand::RotateWristDownZ()
 {
-	if (wristRotationZ <= 90) {
+	if (wristRotationZ <= ZENDLIMIT) {
 		wristRotationZ += 5;
 	}
 }
@@ -124,4 +124,39 @@ void Hand::DrawHand()
 	glPopMatrix();
 	glPopMatrix();
 	glPopMatrix();
+}
+
+Finger Hand::GetPinky()
+{
+	return this->pinky;
+}
+
+Finger Hand::GetRing()
+{
+	return this->ring;
+}
+
+Finger Hand::GetMiddle()
+{
+	return this->middle;
+}
+
+Finger Hand::GetIndex()
+{
+	return this->index;
+}
+
+GLfloat Hand::GetRadius()
+{
+	return this->handRadius;
+}
+
+void Hand::operator=(Hand & rhs)
+{
+	this->pinky = rhs.GetPinky();
+	this->ring = rhs.GetRing();
+	this->middle = rhs.GetMiddle();
+	this->index = rhs.GetIndex();
+
+	this->handRadius = rhs.GetRadius();
 }
