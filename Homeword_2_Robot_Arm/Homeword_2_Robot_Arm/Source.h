@@ -1,10 +1,4 @@
-
-#include <windows.h>  
-#include <gl/Gl.h>
-#include <gl/Glu.h>
-#include <gl/glut.h>
-#include <iostream>
-
+#include "Arm.h"
 
 #define PI 3.1415
 
@@ -40,8 +34,11 @@ GLfloat lightIntensity[] = { 0.7f, 0.7f, 0.7f, 1.0f };
 GLfloat centerX = 0.5;
 GLfloat centerY = 20;
 GLfloat centerZ = 16;
-
+Finger finger;
+Hand hand;
 float height = 50;
 float width = 70;
 float i = 0;
 bool rotateCamera = false;
+
+

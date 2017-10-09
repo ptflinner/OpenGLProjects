@@ -3,6 +3,38 @@
 
 #include "Source.h"
 
+
+/*********** PROTOTYPES ***********/
+void myInit(int shadingChoice, int colorChoice);
+void drawAxes();
+void drawBase();
+void displayRobotArm();
+void myKeyboard(unsigned char key, int x, int y);
+void myIdle();
+
+//<<<<<<<<<< MAIN >>>>>>>>>>
+int main(int argc, char **argv)
+{
+	glutInit(&argc, argv);          // initialize the toolkit
+	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH); // set display mode
+	glutInitWindowSize(screenWidth, screenHeight); // set window size
+	glutInitWindowPosition(100, 100); // set window position on screen
+	glutCreateWindow("Inner Solar System"); // open the screen window
+
+	glutIdleFunc(myIdle);
+	int shadingChoice = 0;
+	int colorChoice = 0;
+
+	myInit(shadingChoice, colorChoice);
+
+	glutDisplayFunc(displayRobotArm);
+	glutKeyboardFunc(myKeyboard);
+
+	glutMainLoop();
+
+	return(0);
+}
+//<<<<<<<<< INITIALIZERS >>>>>>>>>>
 void myInit(int shadingChoice, int colorChoice)
 {
 	glEnable(GL_LIGHTING);
@@ -24,32 +56,11 @@ void myInit(int shadingChoice, int colorChoice)
 
 	glMatrixMode(GL_PROJECTION); // set the view volume shape
 	glLoadIdentity();
-	glOrtho(-3.5*worldWidth / worldHeight, 3.5*worldWidth / worldHeight, -3.5, 3.5, 0.1, 100);
+	glOrtho(-(worldWidth / 2), (worldWidth / 2), -(worldHeight / 2), (worldHeight / 2), -(worldHeight / 2), (worldHeight / 2));
 }
 
+//<<<<<<<<<< DRAWING FUNCTIONS >>>>>>>>>>
 
-void drawAxes()
-{
-	glBegin(GL_LINES);
-	//x
-	glColor3f(1.0f, 0.0f, 0.0f);
-	glVertex3f(0, 0, 0);
-	glVertex3f(100, 0, 0);
-	//y
-	glColor3f(0.0f, 1.0f, 0.0f);
-	glVertex3f(0, 0, 0);
-	glVertex3f(0, 100, 0);
-	//z
-	glColor3f(0.0f, 0.0f, 1.0f);
-	glVertex3f(0, 0, 0);
-	glVertex3f(0, 0, 100);
-	glEnd();
-}
-
-void drawBase() {
-
-}
-//<<<<<<<<<<<<<<<<<<<<<<<<<<<<< displayWire >>>>>>>>>>>>>>>>>>>>>>
 void displayRobotArm()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);     // clear the screen
@@ -57,10 +68,36 @@ void displayRobotArm()
 	glLoadIdentity();
 	gluLookAt(eyex, eyey, eyez, lookx, looky, lookz, 0.0, 1.0, 0.0);
 	glPushMatrix();
+	drawAxes();
+
+	hand.DrawHand();
 	glPopMatrix();
 	glutSwapBuffers();
 }
 
+void drawAxes()
+{
+	glBegin(GL_LINES);
+	//x
+	glColor3f(1.0f, 0.0f, 0.0f);
+	glVertex3f(0, 0, 0);
+	glVertex3f(250, 0, 0);
+	//y
+	glColor3f(0.0f, 1.0f, 0.0f);
+	glVertex3f(0, 0, 0);
+	glVertex3f(0, 250, 0);
+	//z
+	glColor3f(0.0f, 0.0f, 1.0f);
+	glVertex3f(0, 0, 0);
+	glVertex3f(0, 0, 250);
+	glEnd();
+}
+
+void drawBase() {
+
+}
+
+//<<<<<<<<<< USER INPUT FUNCTIONS >>>>>>>>>>
 void myKeyboard(unsigned char key, int x, int y)
 {
 	switch (key) {
@@ -83,8 +120,17 @@ void myKeyboard(unsigned char key, int x, int y)
 			eyez = 25;
 		}
 		break;
-	case 'r':
-		rotateCamera = !rotateCamera;
+	case 'm':
+		hand.CloseHand();
+		break;
+	case 'M':
+		hand.OpenHand();
+		break;
+	case 'n':
+		hand.RotateWristDownX();
+		break;
+	case 'N':
+		hand.RotateWristUpX();
 		break;
 	default:
 		break;
@@ -96,31 +142,4 @@ void myKeyboard(unsigned char key, int x, int y)
 void myIdle() {
 
 	glutPostRedisplay();
-}
-//<<<<<<<<<<<<<<<<<<<<<< main >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-int main(int argc, char **argv)
-{
-	glutInit(&argc, argv);          // initialize the toolkit
-	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH); // set display mode
-	glutInitWindowSize(screenWidth, screenHeight); // set window size
-	glutInitWindowPosition(100, 100); // set window position on screen
-	glutCreateWindow("Inner Solar System"); // open the screen window
-
-	glutIdleFunc(myIdle);
-	int shadingChoice = 0;
-	int colorChoice = 0;
-	std::cout << "Enter Shading Choice (0 for Diffuse, 1 for Specular):\n";
-	std::cin >> shadingChoice;
-
-	std::cout << "Enter Color Option (0 for No Color, 1 for Color):\n";
-	std::cin >> colorChoice;
-
-	myInit(shadingChoice, colorChoice);
-
-	glutDisplayFunc(displayRobotArm);
-	glutKeyboardFunc(myKeyboard);
-
-	glutMainLoop();
-
-	return(0);
 }

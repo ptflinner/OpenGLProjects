@@ -8,26 +8,43 @@ class Finger
 {
 public:
 	Finger();
+	Finger(GLfloat lowerLength, GLfloat middleLength, GLfloat upperLength);
+	Finger(GLfloat lowerLength, GLfloat middleLength, GLfloat upperLength,
+		GLfloat knuckleBaseRadius,GLfloat knuckleMiddleRadius,GLfloat knuckleUpperRadius);
 	~Finger();
+	void DrawFinger();
+	void RotateBaseDown();
+	void RotateBaseUp();
+	void RotateMiddleDown();
+	void RotateMiddleUp();
+	void RotateUpperDown();
+	void RotateUpperUp();
 
+	//Getters
+	GLfloat GetLowerLength();
+	GLfloat GetMiddleLength();
+	GLfloat GetUpperLength();
+
+	GLfloat GetKnuckleBaseRadius();
+	GLfloat GetKnuckleMiddleRadius();
+	GLfloat GetKnuckleUpperRadius();
+
+	//Operator Overload
+	void operator=(Finger& rhs);
 private:
-	GLfloat indexFingerLowerLength;
-	GLfloat middleFingerLowerLength;
-	GLfloat ringFingerLowerLength;
-	GLfloat pinkyFingerLowerLength;
-
-	GLfloat indexFingerMiddleLength;
-	GLfloat middleFingerMiddleLength;
-	GLfloat ringFingerMiddleLength;
-	GLfloat pinkyFingerMiddleLength;
-
-	GLfloat indexFingerUpperLength;
-	GLfloat middleFingerUpperLength;
-	GLfloat ringFingerUpperLength;
-	GLfloat pinkyFingerUpperLength;
+	const GLfloat angleLimitStart=0;
+	const GLfloat angleLimitEnd=90;
+	
+	GLfloat lowerLength;
+	GLfloat middleLength;
+	GLfloat upperLength;
 
 	GLfloat knuckleBaseRadius;
 	GLfloat knuckleMiddleRadius;
-	GLfloat knuckleLowerRadius;
+	GLfloat knuckleUpperRadius;
+
+	GLfloat knuckleBaseAngle;
+	GLfloat knuckleMiddleAngle;
+	GLfloat knuckleUpperAngle;
 };
 

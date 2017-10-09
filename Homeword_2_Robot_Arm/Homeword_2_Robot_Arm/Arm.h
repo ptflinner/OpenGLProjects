@@ -10,14 +10,15 @@
 class Arm
 {
 public:
+	Arm(GLfloat shoulderSocketRadius, GLfloat elbowSocketRadius, GLfloat wristSocketRadius, GLfloat upperArmLength, GLfloat lowerArmLength, Hand hand);
 	Arm();
 	~Arm();
 	void RotateShoulder();
 	void RotateElbow();
 	void RotateHand();
 private:
-	GLfloat elbowSocketRadius;
 	GLfloat shoulderSocketRadius;
+	GLfloat elbowSocketRadius;
 	GLfloat wristSocketRadius;
 
 	GLfloat upperArmLength;
