@@ -2,8 +2,9 @@
 
 
 
-Hand::Hand(GLfloat handRadius,Finger pinky, Finger ring, Finger middle, Finger index)
+Hand::Hand(GLfloat wristRadius,GLfloat handRadius,Finger pinky, Finger ring, Finger middle, Finger index)
 {
+	this->wristRadius = wristRadius;
 	this->handRadius = handRadius;
 	this->pinky = pinky;
 	this->ring = ring;
@@ -13,6 +14,7 @@ Hand::Hand(GLfloat handRadius,Finger pinky, Finger ring, Finger middle, Finger i
 
 Hand::Hand()
 {
+	this->wristRadius = 25;
 	this->handRadius = 50;
 	this->pinky = Finger(50,30,20);
 	this->ring = Finger(80,48,32);
@@ -94,36 +96,46 @@ void Hand::OpenHand()
 void Hand::DrawHand()
 {
 	glPushMatrix();
-	glScalef(1, 1, 1);
-	glRotatef(wristRotationX, 1, 0, 0);
-	glRotatef(wristRotationZ, 0, 0, 1);
-	glutSolidSphere(this->handRadius,20,8);
-	glPushMatrix();
-	glTranslatef(handRadius-(pinky.GetKnuckleBaseRadius()), handRadius,1);
-	glPushMatrix();
-	glRotatef(-30, 0, 0, 1);
-	this->pinky.DrawFinger();
-	glPopMatrix();
-	glPushMatrix();
-	glTranslatef(-(ring.GetKnuckleBaseRadius()*1.2), 1, 1);
-	glPushMatrix();
-	this->ring.DrawFinger();
-	glPopMatrix();
-	glPushMatrix();
-	glTranslatef(-(middle.GetKnuckleBaseRadius()*1.2), 1, 1);
-	glPushMatrix();
-	this->middle.DrawFinger();
-	glPopMatrix();
-	glPushMatrix();
-	glTranslatef(-(index.GetKnuckleBaseRadius()*1.2), -handRadius/10, 1);
-	glPushMatrix();
-	this->index.DrawFinger();
-	glPopMatrix();
-	glPopMatrix();
-	glPopMatrix();
-	glPopMatrix();
-	glPopMatrix();
-	glPopMatrix();
+		glScalef(1, 1, 1);
+		glTranslatef(0, wristRadius/2, 0);
+		glRotatef(wristRotationX, 1, 0, 0);
+		glRotatef(wristRotationZ, 0, 0, 1);
+		glPushMatrix();
+			glutSolidSphere(this->wristRadius, 20, 8);
+		glPopMatrix();
+		glPushMatrix();
+			glTranslatef(0, handRadius/2, 0);
+			glPushMatrix();
+				glutSolidSphere(this->handRadius,20,8);
+			glPopMatrix();
+				glPushMatrix();
+					glScalef(.8, .8, .8);
+					glPushMatrix();
+						glTranslatef(0, handRadius,0);
+
+						glPushMatrix();
+							glTranslatef((middle.GetKnuckleBaseRadius()+pinky.GetKnuckleBaseRadius()+ring.GetKnuckleBaseRadius()),0, 0);
+							glRotatef(-15, 0, 0, 1);
+							this->pinky.DrawFinger();
+						glPopMatrix();
+						glPushMatrix();
+							glTranslatef((middle.GetKnuckleBaseRadius()+ring.GetKnuckleBaseRadius()/2), 0, 0);
+							this->ring.DrawFinger();
+						glPopMatrix();
+						glPushMatrix();
+							glTranslatef(0, 0, 0);
+							this->middle.DrawFinger();
+						glPopMatrix();
+						glPushMatrix();
+							glTranslatef(-(index.GetKnuckleBaseRadius()+ middle.GetKnuckleBaseRadius()/2), -handRadius/10, 0);
+							this->index.DrawFinger();
+						glPopMatrix();
+					glPopMatrix();
+					glTranslatef(middle.GetKnuckleBaseRadius() / 2 + index.GetKnuckleBaseRadius(),0,0);
+					this->thumb.DrawThumb();
+				glPopMatrix();
+			glPopMatrix();
+		glPopMatrix();
 }
 
 Finger Hand::GetPinky()

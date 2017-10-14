@@ -10,9 +10,26 @@ public:
 	Thumb();
 	~Thumb();
 
-	void RotateThumb();
+	void RotateThumbXIn();
+	void RotateThumbXOut();
+	void RotateThumbYIn();
+	void RotateThumbYOut();
+
+	void RotateUpperThumbUp();
+	void RotateUpperThumbDown();
+
+	void DrawThumb();
 private:
-	GLfloat thumbLength;
+	const GLfloat STARTANGLE = 0;
+	const GLfloat ENDXANGLE = 90;
+	const GLfloat ENDYANGLE = 150;
+
+	GLfloat baseXAngle;
+	GLfloat baseYAngle;
+	GLfloat upperYAngle;
+
+	GLfloat thumbUpperLength;
+	GLfloat thumberBaseLength;
 	GLfloat thumbUpperSocketRadius;
 	GLfloat thumbLowerSocketRadius;
 };

@@ -1,10 +1,12 @@
 #pragma once
 
 #include "Finger.h"
+#include "Thumb.h"
+
 class Hand
 {
 public:
-	Hand(GLfloat handRadius,Finger pinky, Finger ring, Finger middle, Finger index);
+	Hand(GLfloat wristRadius,GLfloat handRadius,Finger pinky, Finger ring, Finger middle, Finger index);
 	Hand();
 	~Hand();
 
@@ -34,9 +36,10 @@ private:
 	Finger ring;
 	Finger middle;
 	Finger index;
+	Thumb thumb;
 
 	GLfloat handRadius;
-
+	GLfloat wristRadius;
 	GLfloat wristRotationX;
 	GLfloat wristRotationZ;
 };
