@@ -17,6 +17,7 @@ GLdouble tx = 0.0, ty = 0.0, tz = 0.0;
 GLdouble rotation_angle = 0.0;
 
 // global values for camera
+GLfloat initEyeX=25, initEyeY=25, initEyeZ=25;
 GLdouble eyex = 25.0, eyey = 25.0, eyez = 25.0;
 GLdouble lookx = 0.0, looky = 0.0, lookz = 0.0;
 
@@ -34,11 +35,22 @@ GLfloat lightIntensity[] = { 0.7f, 0.7f, 0.7f, 1.0f };
 GLfloat centerX = 0.5;
 GLfloat centerY = 20;
 GLfloat centerZ = 16;
+GLfloat xMove = 0;
+GLfloat zMove = 0;
+GLfloat baseRadius = 50;
+GLfloat baseAngle = 0;
 Arm arm;
 //Hand hand;
+Thumb thumb;
 float height = 50;
 float width = 70;
 float i = 0;
+float total=0;
+float distance = 5;
 bool rotateCamera = false;
+bool robotOn = true;
+bool filled = true;
+bool showAxis = true;
+bool animateCamera = false;
 
 

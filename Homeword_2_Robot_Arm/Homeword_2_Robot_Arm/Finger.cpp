@@ -48,32 +48,32 @@ Finger::~Finger()
 void Finger::DrawFinger()
 {
 	glPushMatrix();
-	glColor3f(0.0f, 1.0f, 0.0f);
-	glRotatef(knuckleBaseAngle, 1, 0, 0);
-	glutSolidSphere(knuckleBaseRadius,20,8);
-	glPushMatrix();
-	glScaled(knuckleMiddleRadius, lowerLength, knuckleMiddleRadius);
-	glTranslated(0, .5, 0);
-	glutSolidCube(1);
-	glPopMatrix();
-	glPushMatrix();
-	glTranslated(0, lowerLength, 0);
-	glRotatef(knuckleMiddleAngle, 1, 0, 0);
-	glutSolidSphere(knuckleMiddleRadius, 20, 8);
-	glPushMatrix();
-	glScaled(knuckleMiddleRadius, middleLength, knuckleMiddleRadius);
-	glTranslated(0, .5, 0);
-	glutSolidCube(1);
-	glPopMatrix();
-	glTranslated(0, middleLength, 0);
-	glRotatef(knuckleUpperAngle, 1, 0, 0);
-	glutSolidSphere(knuckleUpperRadius, 20, 8);
-	glPushMatrix();
-	glScaled(knuckleUpperRadius, upperLength, knuckleUpperRadius);
-	glTranslated(0, .5, 0);
-	glutSolidCube(1);
-	glPopMatrix();
-	glPopMatrix();
+		glColor3f(0.0f, 1.0f, 0.0f);
+		glRotatef(knuckleBaseAngle, 1, 0, 0);
+		glutSolidSphere(knuckleBaseRadius,20,8);
+		glPushMatrix();
+			glScaled(knuckleMiddleRadius, lowerLength, knuckleMiddleRadius);
+			glTranslated(0, .5, 0);
+			glutSolidCube(1);
+		glPopMatrix();
+		glPushMatrix();
+			glTranslated(0, lowerLength, 0);
+			glRotatef(knuckleMiddleAngle, 1, 0, 0);
+			glutSolidSphere(knuckleMiddleRadius, 20, 8);
+		glPushMatrix();
+			glScaled(knuckleMiddleRadius, middleLength, knuckleMiddleRadius);
+			glTranslated(0, .5, 0);
+			glutSolidCube(1);
+		glPopMatrix();
+			glTranslated(0, middleLength, 0);
+			glRotatef(knuckleUpperAngle, 1, 0, 0);
+			glutSolidSphere(knuckleUpperRadius, 20, 8);
+		glPushMatrix();
+			glScaled(knuckleUpperRadius, upperLength, knuckleUpperRadius);
+			glTranslated(0, .5, 0);
+			glutSolidCube(1);
+		glPopMatrix();
+		glPopMatrix();
 	glPopMatrix();
 }
 
@@ -157,5 +157,9 @@ void Finger::operator=(Finger & rhs)
 	this->knuckleBaseRadius = rhs.GetKnuckleBaseRadius();
 	this->knuckleMiddleRadius = rhs.GetKnuckleMiddleRadius();
 	this->knuckleUpperRadius = rhs.GetKnuckleUpperRadius();
+
+	this->knuckleBaseAngle=0;
+	this->knuckleMiddleAngle=0;
+	this->knuckleUpperAngle=0;
 }
 

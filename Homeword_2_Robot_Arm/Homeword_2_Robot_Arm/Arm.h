@@ -22,7 +22,7 @@ public:
 
 	void DrawArm();
 
-	Hand GetHand();
+
 
 	void CloseHand();
 	void OpenHand();
@@ -31,6 +31,14 @@ public:
 	void RotateWristDownX();
 	void RotateWristUpZ();
 	void RotateWristDownZ();
+
+	GLfloat GetUpperArmLength();
+	GLfloat GetLowerArmLength();
+	GLfloat GetShoulderSocketRadius();
+	GLfloat GetElbowSocketRadius();
+	Hand GetHand();
+
+	void operator=(Arm & rhs);
 private:
 	const GLfloat SHOULDERSTARTLIMITX = -90;
 	const GLfloat SHOULDERENDLIMITX = 90;

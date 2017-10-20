@@ -23,6 +23,7 @@ public:
 	Finger GetRing();
 	Finger GetMiddle();
 	Finger GetIndex();
+	Thumb GetThumb();
 
 	GLfloat GetRadius();
 	//Operator Overload

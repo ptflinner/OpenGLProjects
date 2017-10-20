@@ -105,6 +105,26 @@ void Arm::DrawArm()
 	glPopMatrix();
 }
 
+GLfloat Arm::GetUpperArmLength()
+{
+	return this->upperArmLength;
+}
+
+GLfloat Arm::GetLowerArmLength()
+{
+	return this->lowerArmLength;
+}
+
+GLfloat Arm::GetShoulderSocketRadius()
+{
+	return this->shoulderSocketRadius;
+}
+
+GLfloat Arm::GetElbowSocketRadius()
+{
+	return this->elbowSocketRadius;
+}
+
 Hand Arm::GetHand()
 {
 	return this->hand;
@@ -138,4 +158,17 @@ void Arm::RotateWristUpZ()
 void Arm::RotateWristDownZ()
 {
 	this->hand.RotateWristDownZ();
+}
+
+void Arm::operator=(Arm & rhs)
+{
+	this->shoulderSocketRadius = rhs.GetShoulderSocketRadius();
+	this->elbowSocketRadius = rhs.GetElbowSocketRadius();
+	this->upperArmLength = rhs.GetUpperArmLength();
+	this->lowerArmLength = rhs.GetLowerArmLength();
+	this->hand = rhs.GetHand();
+
+	this->shoulderRotationAngleX=0;
+	this->shoulderRotationAngleY=0;
+	this->elbowRotationAngle=0;
 }

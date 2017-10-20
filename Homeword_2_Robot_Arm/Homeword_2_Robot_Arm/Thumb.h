@@ -18,7 +18,15 @@ public:
 	void RotateUpperThumbUp();
 	void RotateUpperThumbDown();
 
+	GLfloat GetThumbBaseRadius();
+	GLfloat GetThumbUpperRadius();
 	void DrawThumb();
+
+	GLfloat GetUpperLength();
+	GLfloat GetBaseLength();
+	GLfloat GetUpperRadius();
+	GLfloat GetBaseRadius();
+	void operator=(Thumb &rhs);
 private:
 	const GLfloat STARTANGLE = 0;
 	const GLfloat ENDXANGLE = 90;
