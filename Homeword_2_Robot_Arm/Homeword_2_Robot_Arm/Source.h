@@ -53,4 +53,9 @@ bool filled = true;
 bool showAxis = true;
 bool animateCamera = false;
 
-
+//Boundaries
+int top = 100;
+int bottom = -100;
+int left = -100;
+int right = 100;
+int roomFloor = 0;

@@ -302,8 +302,14 @@ void MoveArm() {
 	x = total*sin(baseAngle);
 	z = total*cos(baseAngle);
 
-	xMove += x;
-	zMove += z;
+	if (xMove + x < 100 && xMove + x < 100) {
+		xMove += x;
+	}
+	if (zMove + x < 100 && zMove + x < 100) {
+		zMove += z;
+	}
+	
+	
 }
 void myIdle() {
 
@@ -319,3 +325,6 @@ void myIdle() {
 	}
 	glutPostRedisplay();
 }
+
+
+
