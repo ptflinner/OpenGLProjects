@@ -13,7 +13,9 @@ void myKeyboard(unsigned char key, int x, int y);
 void MySpecialKeyboard(int theKey, int mouseX, int mouseY);
 void MoveArm();
 void myIdle();
-
+Vector ReflectVector(Vector velocity, Vector n);
+Vector NormalizeVector(Vector normalize);
+void CheckCollisionWall(Ball* ball);
 //<<<<<<<<<< MAIN >>>>>>>>>>
 int main(int argc, char **argv)
 {
@@ -22,7 +24,7 @@ int main(int argc, char **argv)
 	glutInitWindowSize(screenWidth, screenHeight); // set window size
 	glutInitWindowPosition(100, 100); // set window position on screen
 	glutCreateWindow("Inner Solar System"); // open the screen window
-
+	ball = new Ball(50, 50, 50, 5, 5, 5, 10);
 	glutIdleFunc(myIdle);
 	int shadingChoice = 0;
 	int colorChoice = 0;
@@ -93,6 +95,9 @@ void displayRobotArm()
 		float z = zMove + baseRadius*sin(2 * PI*t);
 		glVertex3f(x, 0, z);
 	}
+
+	glTranslatef(ball->GetCenterX(), ball->GetCenterY(), ball->GetCenterZ());
+	glutSolidSphere(ball->GetRadius(), 8, 20);
 	glEnd();
 	glutSwapBuffers();
 }
@@ -282,12 +287,12 @@ void MySpecialKeyboard(int theKey, int mouseX, int mouseY) {
 		switch (theKey){
 		case GLUT_KEY_UP:
 			animateCamera = false;
-			total += distance;
+			total += travelDistance;
 			MoveArm();
 			break;
 		case GLUT_KEY_DOWN:
 			animateCamera = false;
-			total -= distance;
+			total -= travelDistance;
 			MoveArm();
 			break;
 		default:
@@ -323,8 +328,100 @@ void myIdle() {
 		eyey = initEyeY;
 		eyez = initEyeZ;
 	}
+	CheckCollisionWall(ball);
+	ball->MoveCoordinate(1);
 	glutPostRedisplay();
 }
 
+//<<<<<<<< Collision Checkers >>>>>>>>>>>>
 
+//Checks if a ball collides with a wall
+void CheckCollisionWall(Ball* ball) {
+	float x = ball->GetVelocity().GetX();
+	float y = ball->GetVelocity().GetY();
+	float z = ball->GetVelocity().GetZ();
+	float radius = ball->GetRadius();
+	Vector velocity = ball->GetVelocity();
 
+	//If statements for all 4 sides of the screen
+	if (ball->GetCenterX() + radius >= topWall) {
+		if (DEBUG) {
+			cout << "REFLECT RIGHT" << endl;
+			cout << "OLD VELOCITY: " << x << " " << y << endl;
+		}
+		ball->SetCenter(topWall- radius, ball->GetCenterY(),ball->GetCenterZ());
+		ball->SetVelocity(ReflectVector(velocity, Vector(topWall, 0,0)));
+	}
+	if (ball->GetCenterX() - radius <= bottomWall) {
+		if (DEBUG) {
+			cout << "REFLECT LEFT" << endl;
+			cout << "OLD VELOCITY: " << x << " " << y << endl;
+		}
+		ball->SetCenter(bottomWall + radius, ball->GetCenterY(), ball->GetCenterZ());
+		ball->SetVelocity(ReflectVector(velocity, Vector(bottomWall, 0,0)));
+	}
+	if (ball->GetCenterY() + radius >= roomCeiling) {
+		if (DEBUG) {
+			cout << "REFLECT TOP" << endl;
+			cout << "OLD VELOCITY: " << x << " " << y << endl;
+		}
+		ball->SetCenter(ball->GetCenterX(), roomCeiling - radius, ball->GetCenterZ());
+		ball->SetVelocity(ReflectVector(velocity, Vector(0,roomCeiling,0)));
+	}
+	if (ball->GetCenterY() - radius <= roomFloor) {
+		if (DEBUG) {
+			cout << "REFLECT BOTTOM" << endl;
+			cout << "OLD VELOCITY: " << x << " " << y << endl;
+		}
+		ball->SetCenter(ball->GetCenterX(), roomFloor + radius, ball->GetCenterZ());
+		ball->SetVelocity(ReflectVector(velocity, Vector(0,roomFloor,0)));
+	}
+	if (ball->GetCenterZ() + radius >= rightWall) {
+		if (DEBUG) {
+			cout << "REFLECT TOP" << endl;
+			cout << "OLD VELOCITY: " << x << " " << y << endl;
+		}
+		ball->SetCenter(ball->GetCenterX(), rightWall - radius, ball->GetCenterZ());
+		ball->SetVelocity(ReflectVector(velocity, Vector(0, 0, rightWall)));
+	}
+	if (ball->GetCenterZ() - radius <= leftWall) {
+		if (DEBUG) {
+			cout << "REFLECT BOTTOM" << endl;
+			cout << "OLD VELOCITY: " << x << " " << y << endl;
+		}
+		ball->SetCenter(ball->GetCenterX(), leftWall + radius, ball->GetCenterZ());
+		ball->SetVelocity(ReflectVector(velocity, Vector(0, 0, leftWall)));
+	}
+}
+
+//<<<<<<<<<<< VECTOR MATH >>>>>>>>>>>
+//Normalizes the vector (x/sqrt(x^2+y^2),y/sqrt(x^2+y^2))
+Vector NormalizeVector(Vector normalize)
+{
+	Vector normalized;
+	float magnitude;
+	magnitude = sqrt(pow(normalize.GetX(), 2) + pow(normalize.GetY(), 2)+ pow(normalize.GetZ(), 2));
+	normalized.SetX(normalize.GetX() / magnitude);
+	normalized.SetY(normalize.GetY() / magnitude);
+	normalized.SetZ(normalize.GetZ() / magnitude);
+	if (DEBUG)cout << "NORMALIZED: " << normalized.GetX() << " " << normalized.GetY()<< " " << normalized.GetZ() << endl;
+	return normalized;
+}
+
+//Formula for reflecting a vector. Used when a ball contacts a wall
+//r=a-2(a*n)n
+Vector ReflectVector(Vector velocity, Vector n)
+{
+	Vector r;
+	Vector a;
+	float base;
+
+	base = velocity*NormalizeVector(n);
+	if (DEBUG)cout << "BASE: " << base << endl;
+	base = base * 2;
+	if (DEBUG)cout << "BASE2: " << base << endl;
+	a = NormalizeVector(n)*base;
+	if (DEBUG)cout << "A: " << a.GetX() << " " << a.GetY() << endl;
+	r = velocity - a;
+	return r;
+}

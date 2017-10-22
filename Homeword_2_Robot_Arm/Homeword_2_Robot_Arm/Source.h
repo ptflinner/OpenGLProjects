@@ -1,5 +1,7 @@
 #include "Arm.h"
-
+#include "Ball.h"
+#include <iostream>
+using namespace std;
 #define PI 3.1415
 
 
@@ -32,21 +34,16 @@ GLfloat shininess[] = { 50.0f };
 GLfloat position[] = { 2.0f, 6.0f, 3.0f, 0.0f };
 GLfloat lightIntensity[] = { 0.7f, 0.7f, 0.7f, 1.0f };
 
-GLfloat centerX = 0.5;
-GLfloat centerY = 20;
-GLfloat centerZ = 16;
-GLfloat xMove = 0;
-GLfloat zMove = 0;
-GLfloat baseRadius = 50;
-GLfloat baseAngle = 0;
+GLfloat centerX = 0.5, centerY = 20, centerZ = 16;
+GLfloat xMove = 0, zMove = 0;
+GLfloat baseRadius = 50, baseAngle = 0;
 Arm arm;
-//Hand hand;
-Thumb thumb;
+Ball* ball;
 float height = 50;
 float width = 70;
 float i = 0;
 float total=0;
-float distance = 5;
+float travelDistance = 5;
 bool rotateCamera = false;
 bool robotOn = true;
 bool filled = true;
@@ -54,8 +51,10 @@ bool showAxis = true;
 bool animateCamera = false;
 
 //Boundaries
-int top = 100;
-int bottom = -100;
-int left = -100;
-int right = 100;
+int topWall = 100;
+int bottomWall = -100;
+int leftWall = -100;
+int rightWall = 100;
 int roomFloor = 0;
+int roomCeiling = 500;
+const bool DEBUG = false;

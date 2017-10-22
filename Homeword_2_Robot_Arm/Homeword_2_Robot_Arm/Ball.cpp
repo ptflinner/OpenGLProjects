@@ -11,8 +11,8 @@ Ball::Ball()
 {
 	radius = 10;
 	mass = radius*radius*radius;
-	velocity.SetCoordinates(0, 0);
-	SetCenter(0, 0);
+	velocity.SetCoordinates(0, 0,0);
+	SetCenter(0, 0,0);
 }
 
 Ball::Ball(float x, float y, float z, float vx, float vy,float vz, float r)
