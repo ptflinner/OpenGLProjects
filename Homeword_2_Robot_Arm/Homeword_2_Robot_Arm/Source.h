@@ -1,3 +1,7 @@
+//Patrick Flinner
+//304607711
+//Date: 10/22/2017
+//Assignment: Homework 2
 #include "Arm.h"
 #include "Ball.h"
 #include <iostream>
@@ -34,6 +38,7 @@ GLfloat shininess[] = { 50.0f };
 GLfloat position[] = { 2.0f, 6.0f, 3.0f, 0.0f };
 GLfloat lightIntensity[] = { 0.7f, 0.7f, 0.7f, 1.0f };
 
+//Various global variables
 GLfloat centerX = 0.5, centerY = 20, centerZ = 16;
 GLfloat xMove = 0, zMove = 0;
 GLfloat baseRadius = 50, baseAngle = 0;
@@ -51,10 +56,10 @@ bool showAxis = true;
 bool animateCamera = false;
 
 //Boundaries
-int topWall = 100;
-int bottomWall = -100;
-int leftWall = -100;
-int rightWall = 100;
-int roomFloor = 0;
-int roomCeiling = 500;
+int topWall = worldWidth/2;
+int bottomWall = -worldWidth/2;
+int leftWall = -worldHeight/2;
+int rightWall = worldHeight/2;
+int roomFloor = -1;
+int roomCeiling = worldHeight/2;
 const bool DEBUG = false;

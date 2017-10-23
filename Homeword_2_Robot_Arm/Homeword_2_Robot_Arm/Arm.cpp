@@ -1,3 +1,7 @@
+//Patrick Flinner
+//304607711
+//Date: 10/22/2017
+//Assignment: Homework 2
 #include "Arm.h"
 
 
@@ -65,13 +69,17 @@ void Arm::RotateElbowUp()
 
 void Arm::DrawArm()
 {
+	//Draws the arm
 	glPushMatrix();
+	//Draws the shoulder socket
 		glScalef(1, 1, 1);
 		glRotatef(shoulderRotationAngleX, 1, 0, 0);
 		glRotatef(shoulderRotationAngleY, 0, 1, 0);
 		glPushMatrix();
 			glutSolidSphere(shoulderSocketRadius, 20, 8);
 		glPopMatrix();
+
+		//Draws the shoulder to elbow bars
 		glPushMatrix();
 			glTranslatef(0, upperArmLength/2, 0);
 			glPushMatrix();
@@ -84,12 +92,16 @@ void Arm::DrawArm()
 				glScalef(shoulderSocketRadius / 4, upperArmLength, shoulderSocketRadius / 4);
 				glutSolidCube(1);
 			glPopMatrix();
+
+			//Draws the elbow socket
 			glPushMatrix();
 				glTranslatef(0, upperArmLength/2, 0);
 				glRotatef(elbowRotationAngle, 1, 0, 0);
 				glPushMatrix();
 					glutSolidSphere(elbowSocketRadius,20,8);
 				glPopMatrix();
+
+				//Draws the elbow arm bar
 				glPushMatrix();
 					glTranslatef(1, lowerArmLength / 2, 1);
 					glPushMatrix();
@@ -98,6 +110,8 @@ void Arm::DrawArm()
 					glPopMatrix();
 					glScalef(.4, .4, .4);
 					glTranslatef(1, lowerArmLength , 1);
+
+					//Draws the hand
 					hand.DrawHand();
 				glPopMatrix();
 			glPopMatrix();

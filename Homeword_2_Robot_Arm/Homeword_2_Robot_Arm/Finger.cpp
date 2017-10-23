@@ -1,3 +1,7 @@
+//Patrick Flinner
+//304607711
+//Date: 10/22/2017
+//Assignment: Homework 2
 #include "Finger.h"
 
 
@@ -47,32 +51,41 @@ Finger::~Finger()
 
 void Finger::DrawFinger()
 {
+	//Draws the first knuckle
 	glPushMatrix();
 		glColor3f(0.0f, 1.0f, 0.0f);
 		glRotatef(knuckleBaseAngle, 1, 0, 0);
 		glutSolidSphere(knuckleBaseRadius,20,8);
+		//Draws the base of the finger
 		glPushMatrix();
 			glScaled(knuckleMiddleRadius, lowerLength, knuckleMiddleRadius);
 			glTranslated(0, .5, 0);
 			glutSolidCube(1);
 		glPopMatrix();
+
+		//Draws the second knuckle
 		glPushMatrix();
 			glTranslated(0, lowerLength, 0);
 			glRotatef(knuckleMiddleAngle, 1, 0, 0);
 			glutSolidSphere(knuckleMiddleRadius, 20, 8);
-		glPushMatrix();
-			glScaled(knuckleMiddleRadius, middleLength, knuckleMiddleRadius);
-			glTranslated(0, .5, 0);
-			glutSolidCube(1);
-		glPopMatrix();
+
+			//Draws the middle length
+			glPushMatrix();
+				glScaled(knuckleMiddleRadius, middleLength, knuckleMiddleRadius);
+				glTranslated(0, .5, 0);
+				glutSolidCube(1);
+			glPopMatrix();
+			//Draws the final knuckle
 			glTranslated(0, middleLength, 0);
 			glRotatef(knuckleUpperAngle, 1, 0, 0);
 			glutSolidSphere(knuckleUpperRadius, 20, 8);
-		glPushMatrix();
-			glScaled(knuckleUpperRadius, upperLength, knuckleUpperRadius);
-			glTranslated(0, .5, 0);
-			glutSolidCube(1);
-		glPopMatrix();
+
+			//Draws the final finger length
+			glPushMatrix();
+				glScaled(knuckleUpperRadius, upperLength, knuckleUpperRadius);
+				glTranslated(0, .5, 0);
+				glutSolidCube(1);
+			glPopMatrix();
 		glPopMatrix();
 	glPopMatrix();
 }

@@ -24,9 +24,6 @@
     <ClCompile Include="Hand.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="LeftArm.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Finger.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -48,9 +45,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Hand.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="LeftArm.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Finger.h">

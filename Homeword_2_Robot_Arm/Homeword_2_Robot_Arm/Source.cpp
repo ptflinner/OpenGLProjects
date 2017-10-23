@@ -1,6 +1,7 @@
 //Patrick Flinner
 //304607711
-
+//Date: 10/22/2017
+//Assignment: Homework 2
 #include "Source.h"
 
 
@@ -11,7 +12,6 @@ void drawBase();
 void displayRobotArm();
 void myKeyboard(unsigned char key, int x, int y);
 void MySpecialKeyboard(int theKey, int mouseX, int mouseY);
-void MoveArm();
 void myIdle();
 Vector ReflectVector(Vector velocity, Vector n);
 Vector NormalizeVector(Vector normalize);
@@ -24,7 +24,7 @@ int main(int argc, char **argv)
 	glutInitWindowSize(screenWidth, screenHeight); // set window size
 	glutInitWindowPosition(100, 100); // set window position on screen
 	glutCreateWindow("Inner Solar System"); // open the screen window
-	ball = new Ball(50, 50, 50, 5, 5, 5, 10);
+	ball = new Ball(0, 10, 00,0,0, 0, 25);
 	glutIdleFunc(myIdle);
 	int shadingChoice = 0;
 	int colorChoice = 0;
@@ -61,7 +61,7 @@ void myInit(int shadingChoice, int colorChoice)
 
 	glMatrixMode(GL_PROJECTION); // set the view volume shape
 	glLoadIdentity();
-	glOrtho(-(worldWidth / 2), (worldWidth / 2), -(worldHeight / 2), (worldHeight / 2), -500,500);
+	glOrtho(-(worldWidth / 2), (worldWidth / 2), -(worldHeight / 2), (worldHeight / 2), -250,250);
 }
 
 //<<<<<<<<<< DRAWING FUNCTIONS >>>>>>>>>>
@@ -73,6 +73,10 @@ void displayRobotArm()
 	glLoadIdentity();
 	gluLookAt(eyex, eyey, eyez, lookx, looky, lookz, 0.0, 1.0, 0.0);
 	glPushMatrix();
+	glTranslatef(ball->GetCenterX(), ball->GetCenterY(), ball->GetCenterZ());
+	glutSolidSphere(ball->GetRadius(), 8, 20);
+	glPopMatrix();
+	glPushMatrix();
 	if(showAxis)drawAxes();
 
 	glTranslatef(xMove, 0, zMove);
@@ -82,13 +86,16 @@ void displayRobotArm()
 	gluCylinder(quad, baseRadius, baseRadius, 10, 20, 8);
 	glPopMatrix();
 	
+	glRotatef(90, 0, 1, 0);
 	glRotatef(baseAngle, 0, 1, 0);
 	
 	arm.DrawArm();
 
-	glPopMatrix();
 
-	glColor3f(0.0f, 0.0f, 1.0f);
+
+	glPopMatrix();
+	
+
 	glBegin(GL_POLYGON);
 	for (double t = 0; t < 1; t += .01) {
 		float x = xMove + baseRadius*cos(2 * PI*t);
@@ -96,8 +103,7 @@ void displayRobotArm()
 		glVertex3f(x, 0, z);
 	}
 
-	glTranslatef(ball->GetCenterX(), ball->GetCenterY(), ball->GetCenterZ());
-	glutSolidSphere(ball->GetRadius(), 8, 20);
+	
 	glEnd();
 	glutSwapBuffers();
 }
@@ -130,15 +136,6 @@ void myKeyboard(unsigned char key, int x, int y)
 	if (robotOn) {
 		Hand hand=arm.GetHand();
 		switch (key) {
-		case 'a':
-			break;
-		case 's':
-			animateCamera = !animateCamera;
-			break;
-		case 'c':
-			animateCamera = false;
-			showAxis = !showAxis;
-			break;
 		case 'v':
 			animateCamera = false;
 			view++;
@@ -175,10 +172,6 @@ void myKeyboard(unsigned char key, int x, int y)
 			animateCamera = false;
 			arm.RotateWristUpX();
 			break;
-		case 'o':
-			animateCamera = false;
-			robotOn = !robotOn;
-			break;
 		case 'i':
 			animateCamera = false;
 			arm.RotateShoulderDown();
@@ -207,33 +200,10 @@ void myKeyboard(unsigned char key, int x, int y)
 				baseAngle -= 5;
 			}
 			break;
-		case 'u':
-			animateCamera = false;
-			if (filled) {
-				glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-				filled = !filled;
-			}
-			else {
-				glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-				filled = !filled;
-			}
-			break;
-		case 27:
-			animateCamera = false;
-			arm = Arm();
-			xMove = 0;
-			zMove = 0;
-			break;
-		case 'q':
-		case 'Q':
-			animateCamera = false;
-			exit(EXIT_SUCCESS);
-			break;
 		default:
 			break;
 		}
 	}
-	else {
 		switch (key) {
 		case 'a':
 			break;
@@ -273,27 +243,22 @@ void myKeyboard(unsigned char key, int x, int y)
 		default:
 			break;
 		}
-
-	}
-	
-
 	glutPostRedisplay();
 
 }
 void MySpecialKeyboard(int theKey, int mouseX, int mouseY) {
-
+	float theta = baseAngle*PI / 180;
 	//Special function key presses
 	if (robotOn) {
 		switch (theKey){
 		case GLUT_KEY_UP:
 			animateCamera = false;
-			total += travelDistance;
-			MoveArm();
+			xMove += 5*cos(-1 * theta);
+			zMove += 5*sin(-1 * theta);
 			break;
 		case GLUT_KEY_DOWN:
-			animateCamera = false;
-			total -= travelDistance;
-			MoveArm();
+			xMove -= 5 * cos(-1 * theta);
+			zMove -= 5 * sin(-1 * theta);
 			break;
 		default:
 			break;
@@ -301,21 +266,7 @@ void MySpecialKeyboard(int theKey, int mouseX, int mouseY) {
 
 	}
 }
-void MoveArm() {
-	float x;
-	float z;
-	x = total*sin(baseAngle);
-	z = total*cos(baseAngle);
 
-	if (xMove + x < 100 && xMove + x < 100) {
-		xMove += x;
-	}
-	if (zMove + x < 100 && zMove + x < 100) {
-		zMove += z;
-	}
-	
-	
-}
 void myIdle() {
 
 	if (animateCamera) {
@@ -381,7 +332,7 @@ void CheckCollisionWall(Ball* ball) {
 			cout << "REFLECT TOP" << endl;
 			cout << "OLD VELOCITY: " << x << " " << y << endl;
 		}
-		ball->SetCenter(ball->GetCenterX(), rightWall - radius, ball->GetCenterZ());
+		ball->SetCenter(ball->GetCenterX(), ball->GetCenterY(), rightWall - radius);
 		ball->SetVelocity(ReflectVector(velocity, Vector(0, 0, rightWall)));
 	}
 	if (ball->GetCenterZ() - radius <= leftWall) {
@@ -389,7 +340,7 @@ void CheckCollisionWall(Ball* ball) {
 			cout << "REFLECT BOTTOM" << endl;
 			cout << "OLD VELOCITY: " << x << " " << y << endl;
 		}
-		ball->SetCenter(ball->GetCenterX(), leftWall + radius, ball->GetCenterZ());
+		ball->SetCenter(ball->GetCenterX(), ball->GetCenterY(), leftWall + radius);
 		ball->SetVelocity(ReflectVector(velocity, Vector(0, 0, leftWall)));
 	}
 }
@@ -423,5 +374,6 @@ Vector ReflectVector(Vector velocity, Vector n)
 	a = NormalizeVector(n)*base;
 	if (DEBUG)cout << "A: " << a.GetX() << " " << a.GetY() << endl;
 	r = velocity - a;
+
 	return r;
 }

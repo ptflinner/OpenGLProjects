@@ -1,3 +1,7 @@
+//Patrick Flinner
+//304607711
+//Date: 10/22/2017
+//Assignment: Homework 2
 #include "Hand.h"
 
 
@@ -102,21 +106,29 @@ void Hand::OpenHand()
 
 void Hand::DrawHand()
 {
+	//Draws the hand
 	glPushMatrix();
 		glScalef(1, 1, 1);
 		glTranslatef(0, wristRadius/2, 0);
 		glRotatef(wristRotationX, 1, 0, 0);
 		glRotatef(wristRotationZ, 0, 0, 1);
+		
+		//Draws the wrist
 		glPushMatrix();
 			glutSolidSphere(this->wristRadius, 20, 8);
 		glPopMatrix();
+
+		//Draws the main hand
 		glPushMatrix();
 			glTranslatef(0, handRadius/2, 0);
 			glPushMatrix();
 			glutSolidSphere(this->handRadius,20,8);
 			glPopMatrix();
+				//Scales the finger
 				glPushMatrix();
 					glScalef(.8, .8, .8);
+
+					//Places the fingers on the hand
 					glPushMatrix();
 						glTranslatef(0, handRadius,0);
 

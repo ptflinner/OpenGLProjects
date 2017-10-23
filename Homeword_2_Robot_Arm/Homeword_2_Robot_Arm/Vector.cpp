@@ -116,6 +116,11 @@ Vector Vector::operator/(float & rhs)
 	return Vector(x / rhs, y / rhs,z/rhs);
 }
 
+Vector Vector::operator/(int & rhs)
+{
+	return Vector(x / rhs, y / rhs, z / rhs);
+}
+
 //Prints the vector
 std::ostream & operator<<(std::ostream & os, Vector & rhs)
 {

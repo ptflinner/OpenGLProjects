@@ -27,6 +27,7 @@ public:
 	Vector operator+(Vector& rhs);
 	Vector operator*(float& rhs);
 	Vector operator/(float& rhs);
+	Vector operator/(int& rhs);
 	float operator*(Vector& rhs);
 	void operator=(Vector& rhs);
 

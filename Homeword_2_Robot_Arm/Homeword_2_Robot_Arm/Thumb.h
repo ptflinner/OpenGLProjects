@@ -1,3 +1,7 @@
+//Patrick Flinner
+//304607711
+//Date: 10/22/2017
+//Assignment: Homework 2
 #pragma once
 #include <windows.h>  
 #include <gl/Gl.h>

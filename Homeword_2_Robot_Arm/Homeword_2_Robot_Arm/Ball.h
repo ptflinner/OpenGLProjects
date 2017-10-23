@@ -12,7 +12,7 @@ class Ball
 {
 
 private:
-
+	//Variables needed for the  ball
 	double radius;
 	double mass;
 	Vector velocity;
@@ -22,6 +22,8 @@ public:
 	Ball();
 	Ball(float x, float y,float z, float vx, float vy,float vz, float r);
 	~Ball();
+
+	//Getters and setters
 	double GetRadius();
 	void SetRadius(double radius);
 	double GetMass();
@@ -34,6 +36,8 @@ public:
 	float GetCenterY();
 	float GetCenterZ();
 	Vector GetCenter();
+
+	//Moves the ball
 	void MoveCoordinate(float t);
 };
 

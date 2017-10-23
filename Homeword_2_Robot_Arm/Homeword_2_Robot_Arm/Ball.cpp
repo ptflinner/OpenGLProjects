@@ -1,7 +1,7 @@
 //Patrick Flinner
 //304607711
-//Date: 9/24/2017
-//Assignment: Homework 1
+//Date: 10/22/2017
+//Assignment: Homework 2
 
 #include "Ball.h"
 #include <iostream>

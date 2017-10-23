@@ -1,3 +1,7 @@
+//Patrick Flinner
+//304607711
+//Date: 10/22/2017
+//Assignment: Homework 2
 #pragma once
 #include <windows.h>  
 #include <gl/Gl.h>
@@ -13,6 +17,8 @@ public:
 	Arm(GLfloat shoulderSocketRadius, GLfloat elbowSocketRadius, GLfloat upperArmLength, GLfloat lowerArmLength, Hand hand);
 	Arm();
 	~Arm();
+
+	//Rotation of the arm
 	void RotateShoulderDown();
 	void RotateShoulderUp();
 	void RotateShoulderClockWise();
@@ -22,24 +28,28 @@ public:
 
 	void DrawArm();
 
-
-
+	//Hand animations
 	void CloseHand();
 	void OpenHand();
 
+	//Rotate the wrist
 	void RotateWristUpX();
 	void RotateWristDownX();
 	void RotateWristUpZ();
 	void RotateWristDownZ();
 
+	//Retrieve variables
 	GLfloat GetUpperArmLength();
 	GLfloat GetLowerArmLength();
 	GLfloat GetShoulderSocketRadius();
 	GLfloat GetElbowSocketRadius();
 	Hand GetHand();
 
+	//Overload for setting new arm
 	void operator=(Arm & rhs);
+
 private:
+	//Variables that make up the arm
 	const GLfloat SHOULDERSTARTLIMITX = -90;
 	const GLfloat SHOULDERENDLIMITX = 90;
 	const GLfloat ELBOWSTARTLIMIT = 0;
