@@ -16,6 +16,7 @@ void myIdle();
 Vector ReflectVector(Vector velocity, Vector n);
 Vector NormalizeVector(Vector normalize);
 void CheckCollisionWall(Ball* ball);
+void Animate();
 //<<<<<<<<<< MAIN >>>>>>>>>>
 int main(int argc, char **argv)
 {
@@ -24,7 +25,7 @@ int main(int argc, char **argv)
 	glutInitWindowSize(screenWidth, screenHeight); // set window size
 	glutInitWindowPosition(100, 100); // set window position on screen
 	glutCreateWindow("Inner Solar System"); // open the screen window
-	ball = new Ball(0, 10, 00,0,0, 0, 25);
+	ball = new Ball(25,210, 0,0,0, 0, 20);
 	glutIdleFunc(myIdle);
 	int shadingChoice = 0;
 	int colorChoice = 0;
@@ -73,8 +74,14 @@ void displayRobotArm()
 	glLoadIdentity();
 	gluLookAt(eyex, eyey, eyez, lookx, looky, lookz, 0.0, 1.0, 0.0);
 	glPushMatrix();
-	glTranslatef(ball->GetCenterX(), ball->GetCenterY(), ball->GetCenterZ());
-	glutSolidSphere(ball->GetRadius(), 8, 20);
+	if (throwing) {
+		if (initialThrow) {
+			glRotatef(90, 0, 1, 0);
+			glRotatef(baseAngle, 0, 1, 0);
+		}
+		glTranslatef(ball->GetCenterX(), ball->GetCenterY(), ball->GetCenterZ());
+		glutSolidSphere(ball->GetRadius(), 8, 20);
+	}
 	glPopMatrix();
 	glPushMatrix();
 	if(showAxis)drawAxes();
@@ -206,6 +213,11 @@ void myKeyboard(unsigned char key, int x, int y)
 	}
 		switch (key) {
 		case 'a':
+			if(!animate)arm = Arm();
+			arm.ResetScale();
+			animate = !animate;
+			throwing = false;
+			initialThrow = true;
 			break;
 		case 's':
 			animateCamera = !animateCamera;
@@ -234,6 +246,8 @@ void myKeyboard(unsigned char key, int x, int y)
 			arm = Arm();
 			xMove = 0;
 			zMove = 0;
+			throwing = false;
+			delete(ball);
 			break;
 		case 'q':
 		case 'Q':
@@ -263,8 +277,8 @@ void MySpecialKeyboard(int theKey, int mouseX, int mouseY) {
 		default:
 			break;
 		}
-
 	}
+	glutPostRedisplay();
 }
 
 void myIdle() {
@@ -279,11 +293,63 @@ void myIdle() {
 		eyey = initEyeY;
 		eyez = initEyeZ;
 	}
+	if (animate) {
+		Animate();
+	}
 	CheckCollisionWall(ball);
 	ball->MoveCoordinate(1);
 	glutPostRedisplay();
 }
 
+void Animate() {
+	
+	arm.SetAnimation(true);
+	if (handInit<18) {
+		arm.CloseHand();
+		handInit++;
+	}
+	if (elbowInit < elbowTrigger) {
+		arm.RotateElbowDown();
+		elbowInit++;
+	}
+	if (shoulderInit < shoulderTrigger) {
+		arm.RotateShoulderUp();
+		shoulderInit++;
+	}
+	
+	if (handInit >=18 && elbowInit >= elbowTrigger && shoulderInit >= shoulderTrigger) {
+		if (handCount > 8)
+		{
+			arm.ScaleBall();
+			handCount--;
+		}
+		else {
+			
+			if (elbowCount > 0) {
+				arm.RotateElbowUp();
+				elbowCount--;
+			}
+			if (shoulderCount > 0) {
+				arm.RotateShoulderDown();
+				shoulderCount--;
+			}
+			if (elbowCount == 0 && shoulderCount == 0) {
+				arm.SetAnimation(false);
+				animate = false;
+				handInit = 0;
+				elbowInit = 0;
+				shoulderInit = 0;
+				handCount = 18;
+				elbowCount = 8;
+				shoulderCount = 14;
+				
+				ball = new Ball(xMove, 210, zMove, 5, 5, 5, 20);
+				throwing = true;
+			}
+		}
+	}
+	glutPostRedisplay();
+}
 //<<<<<<<< Collision Checkers >>>>>>>>>>>>
 
 //Checks if a ball collides with a wall

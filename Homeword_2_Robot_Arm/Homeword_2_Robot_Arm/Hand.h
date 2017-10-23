@@ -21,7 +21,7 @@ public:
 	void CloseHand();
 	void OpenHand();
 	void DrawHand();
-
+	void ScaleBall();
 	//Getters
 	Finger GetPinky();
 	Finger GetRing();
@@ -29,6 +29,8 @@ public:
 	Finger GetIndex();
 	Thumb GetThumb();
 
+	void SetAnimation(bool animate);
+	void ResetScale();
 	GLfloat GetRadius();
 	//Operator Overload
 	void operator=(Hand& rhs);
@@ -42,7 +44,8 @@ private:
 	Finger middle;
 	Finger index;
 	Thumb thumb;
-
+	bool animation;
+	float ballScale;
 	GLfloat handRadius;
 	GLfloat wristRadius;
 	GLfloat wristRotationX;

@@ -31,6 +31,7 @@ public:
 	//Hand animations
 	void CloseHand();
 	void OpenHand();
+	void ScaleBall();
 
 	//Rotate the wrist
 	void RotateWristUpX();
@@ -48,6 +49,8 @@ public:
 	//Overload for setting new arm
 	void operator=(Arm & rhs);
 
+	void SetAnimation(bool animate);
+	void ResetScale();
 private:
 	//Variables that make up the arm
 	const GLfloat SHOULDERSTARTLIMITX = -90;

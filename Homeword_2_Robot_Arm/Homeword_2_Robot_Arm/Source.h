@@ -56,10 +56,24 @@ bool showAxis = true;
 bool animateCamera = false;
 
 //Boundaries
-int topWall = worldWidth/2;
-int bottomWall = -worldWidth/2;
-int leftWall = -worldHeight/2;
-int rightWall = worldHeight/2;
+int topWall = worldWidth/3;
+int bottomWall = -worldWidth/3;
+int leftWall = -worldHeight/3;
+int rightWall = worldHeight/3;
 int roomFloor = -1;
 int roomCeiling = worldHeight/2;
 const bool DEBUG = false;
+
+//Animation values
+bool animate = false;
+bool throwing = false;
+bool initialThrow = true;
+int handInit = 0;
+int elbowInit = 0;
+int shoulderInit = 0;
+int handCount = 18;
+int handTrigger = 10;
+int elbowCount = 8;
+int elbowTrigger = 8;
+int shoulderCount = 14;
+int shoulderTrigger = 14;

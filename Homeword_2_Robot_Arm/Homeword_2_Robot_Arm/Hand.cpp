@@ -14,6 +14,7 @@ Hand::Hand(GLfloat wristRadius,GLfloat handRadius,Finger pinky, Finger ring, Fin
 	this->ring = ring;
 	this->middle = middle;
 	this->index = index;
+	this->ballScale = 0;
 }
 
 Hand::Hand()
@@ -24,6 +25,7 @@ Hand::Hand()
 	this->ring = Finger(80,48,32);
 	this->middle = Finger();
 	this->index = Finger(80, 48, 32);
+	this->ballScale = 0;
 }
 
 
@@ -117,7 +119,13 @@ void Hand::DrawHand()
 		glPushMatrix();
 			glutSolidSphere(this->wristRadius, 20, 8);
 		glPopMatrix();
-
+		if (animation) {
+			glPushMatrix();
+				glTranslatef(0, ballScale*4, ballScale*4);
+				glScalef(ballScale, ballScale, ballScale);
+				glutSolidSphere(4, 20, 8);
+			glPopMatrix();
+		}
 		//Draws the main hand
 		glPushMatrix();
 			glTranslatef(0, handRadius/2, 0);
@@ -158,6 +166,12 @@ void Hand::DrawHand()
 		glPopMatrix();
 }
 
+void Hand::ScaleBall()
+{
+	ballScale+=1.25;
+	OpenHand();
+}
+
 Finger Hand::GetPinky()
 {
 	return this->pinky;
@@ -176,6 +190,16 @@ Finger Hand::GetMiddle()
 Finger Hand::GetIndex()
 {
 	return this->index;
+}
+
+void Hand::SetAnimation(bool animate)
+{
+	this->animation = animate;
+}
+
+void Hand::ResetScale()
+{
+	ballScale = 0;
 }
 
 GLfloat Hand::GetRadius()

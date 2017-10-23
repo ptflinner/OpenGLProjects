@@ -154,6 +154,11 @@ void Arm::OpenHand()
 	this->hand.OpenHand();
 }
 
+void Arm::ScaleBall()
+{
+	this->hand.ScaleBall();
+}
+
 void Arm::RotateWristUpX()
 {
 	this->hand.RotateWristUpX();
@@ -185,4 +190,14 @@ void Arm::operator=(Arm & rhs)
 	this->shoulderRotationAngleX=0;
 	this->shoulderRotationAngleY=0;
 	this->elbowRotationAngle=0;
+}
+
+void Arm::SetAnimation(bool animate)
+{
+	this->hand.SetAnimation(animate);
+}
+
+void Arm::ResetScale()
+{
+	this->hand.ResetScale();
 }
