@@ -24,8 +24,8 @@ int main(int argc, char **argv)
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH); // set display mode
 	glutInitWindowSize(screenWidth, screenHeight); // set window size
 	glutInitWindowPosition(100, 100); // set window position on screen
-	glutCreateWindow("Inner Solar System"); // open the screen window
-	ball = new Ball(25,210, 0,0,0, 0, 20);
+	glutCreateWindow("Robot Arm"); // open the screen window
+
 	glutIdleFunc(myIdle);
 	int shadingChoice = 0;
 	int colorChoice = 0;
@@ -57,12 +57,13 @@ void myInit(int shadingChoice, int colorChoice)
 
 	glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
 	glEnable(GL_COLOR_MATERIAL);
-
+	ball = new Ball(25, 210, 0, 0, 0, 0, 20);
 	glClearColor(1.0f, 1.0f, 1.0f, 0.0f);  // background is white
 
 	glMatrixMode(GL_PROJECTION); // set the view volume shape
 	glLoadIdentity();
-	glOrtho(-(worldWidth / 2), (worldWidth / 2), -(worldHeight / 2), (worldHeight / 2), -250,250);
+	cam.setShape(100.0f, (float)screenWidth/screenHeight , 0.5f, 500.0f);// set the view volume shape ----
+	cam.set(Point3(250, 250, 250), Point3(0, 0, 0), Vector3(0, 1, 0));
 }
 
 //<<<<<<<<<< DRAWING FUNCTIONS >>>>>>>>>>
@@ -70,9 +71,7 @@ void myInit(int shadingChoice, int colorChoice)
 void displayRobotArm()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);     // clear the screen
-	glMatrixMode(GL_MODELVIEW); // position and aim the camera
-	glLoadIdentity();
-	gluLookAt(eyex, eyey, eyez, lookx, looky, lookz, 0.0, 1.0, 0.0);
+	
 	glPushMatrix();
 	if (throwing) {
 		if (initialThrow) {
@@ -140,9 +139,20 @@ void drawBase() {
 //<<<<<<<<<< USER INPUT FUNCTIONS >>>>>>>>>>
 void myKeyboard(unsigned char key, int x, int y)
 {
+	float theta = baseAngle*PI / 180;
 	if (robotOn) {
 		Hand hand=arm.GetHand();
 		switch (key) {
+		case 'w':
+			animateCamera = false;
+			xMove += 5 * cos(-1 * theta);
+			zMove += 5 * sin(-1 * theta);
+			break;
+		case 'd':
+			animateCamera = false;
+			xMove -= 5 * cos(-1 * theta);
+			zMove -= 5 * sin(-1 * theta);
+			break;
 		case 'v':
 			animateCamera = false;
 			view++;
@@ -195,23 +205,39 @@ void myKeyboard(unsigned char key, int x, int y)
 			animateCamera = false;
 			arm.RotateElbowUp();
 			break;
-		case 'r':
-			animateCamera = false;
-			if (robotOn) {
-				baseAngle += 5;
-			}
-			break;
-		case 'R':
-			animateCamera = false;
-			if (robotOn) {
-				baseAngle -= 5;
-			}
-			break;
 		default:
 			break;
 		}
 	}
 		switch (key) {
+		case 'r':
+			std::cout << "Camera roll counter clock-wise " << std::endl;
+			cam.roll(1.0);
+			break; // roll the camera 
+		case 'R':
+			std::cout << "Camera roll clock-wise" << std::endl;
+			cam.roll(-1.0);
+			break; // roll the camera back	
+		case 'p':
+			std::cout << "Camera pitch up" << std::endl;
+			// complete pitch function in camera.cpp and invoke cam.pitch() function
+			cam.pitch(1.0);
+			break;
+		case 'P':
+			std::cout << "Camera pitch down" << std::endl;
+			cam.pitch(-1.0);
+			// complete pitch function in camera.cpp and invoke cam.pitch() function
+			break;
+		case 'y':
+			std::cout << "Camera yaw left" << std::endl;
+			cam.yaw(1.0);
+			// complete yaw function in camera.cpp and invoke cam.yaw() function
+			break;
+		case 'Y':
+			std::cout << "Camera yaw right" << std::endl;
+			cam.yaw(-1.0);
+			// complete yaw function in camera.cpp and invoke cam.yaw() function
+			break;
 		case 'a':
 			if(!animate)arm = Arm();
 			arm.ResetScale();
@@ -261,22 +287,37 @@ void myKeyboard(unsigned char key, int x, int y)
 
 }
 void MySpecialKeyboard(int theKey, int mouseX, int mouseY) {
-	float theta = baseAngle*PI / 180;
+
 	//Special function key presses
-	if (robotOn) {
 		switch (theKey){
+		case GLUT_KEY_LEFT:
+			std::cout << "Camera move left" << std::endl;
+			cam.slide(-10, 0, 0);
+			break;
+		case GLUT_KEY_RIGHT:
+			std::cout << "Camera move right" << std::endl;
+			cam.slide(10, 0, 0);
+			break;
 		case GLUT_KEY_UP:
-			animateCamera = false;
-			xMove += 5*cos(-1 * theta);
-			zMove += 5*sin(-1 * theta);
+			std::cout << "Camera move up" << std::endl;
+			cam.slide(0, 0.2, 0);
 			break;
 		case GLUT_KEY_DOWN:
-			xMove -= 5 * cos(-1 * theta);
-			zMove -= 5 * sin(-1 * theta);
+			std::cout << "Camera move down" << std::endl;
+			cam.slide(0, -0.2, 0);
+			break;
+		case GLUT_KEY_PAGE_UP:
+			// slide camera forward
+			std::cout << "Camera zoom-in" << std::endl;
+			cam.slide(0, 0, 0.2);
+			break;
+		case GLUT_KEY_PAGE_DOWN:
+			// slide camera backward
+			std::cout << "Camera zoom-out" << std::endl;
+			cam.slide(0, 0, -0.2);
 			break;
 		default:
 			break;
-		}
 	}
 	glutPostRedisplay();
 }

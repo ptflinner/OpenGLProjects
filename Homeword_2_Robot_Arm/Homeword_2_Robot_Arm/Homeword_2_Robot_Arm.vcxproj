@@ -118,6 +118,7 @@
   <ItemGroup>
     <ClCompile Include="Arm.cpp" />
     <ClCompile Include="Ball.cpp" />
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Finger.cpp" />
     <ClCompile Include="Hand.cpp" />
     <ClCompile Include="Source.cpp" />
@@ -127,11 +128,14 @@
   <ItemGroup>
     <ClInclude Include="Arm.h" />
     <ClInclude Include="Ball.h" />
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="Finger.h" />
     <ClInclude Include="Hand.h" />
+    <ClInclude Include="Point3.h" />
     <ClInclude Include="Source.h" />
     <ClInclude Include="Thumb.h" />
     <ClInclude Include="Vector.h" />
+    <ClInclude Include="Vector3.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -4,6 +4,7 @@
 //Assignment: Homework 2
 #include "Arm.h"
 #include "Ball.h"
+#include "Camera.h"
 #include <iostream>
 using namespace std;
 #define PI 3.1415
@@ -44,6 +45,7 @@ GLfloat xMove = 0, zMove = 0;
 GLfloat baseRadius = 50, baseAngle = 0;
 Arm arm;
 Ball* ball;
+Camera cam; // global camera object
 float height = 50;
 float width = 70;
 float i = 0;
