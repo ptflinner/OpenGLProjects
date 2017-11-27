@@ -4,7 +4,7 @@
 
 #ifndef POINT3_H
 #define POINT3_H
-
+#include <iostream>
 // Point3 class 
 class Point3 {
 public:
@@ -19,6 +19,11 @@ public:
 	void build4tuple(float v[])
 	{// load 4-tuple with this color: v[3] = 1 for homogeneous
 		v[0] = x; v[1] = y; v[2] = z; v[3] = 1.0f;
+	}
+
+	friend std::ostream& operator<<(std::ostream& os, Point3& rhs) {
+		os << "X: " << rhs.x << " Y: " << rhs.y << " Z: " << rhs.z << std::endl;
+		return os;
 	}
 };
 
