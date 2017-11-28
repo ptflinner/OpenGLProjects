@@ -60,7 +60,7 @@ void myInit()
 {
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);  // background is black
 	cam.setShape(50.0f, (float)screenWidth / screenHeight, 0.5f, 200.0f);// set the view volume shape ----
-	cam.set(Point3(4, 4, 4), Point3(0, 0, 0), Vector3(0, 1, 0));
+	cam.set(Point3(0, 2, 4), Point3(0, 2, 0), Vector3(0, 1, 0));
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
 	glEnable(GL_DEPTH_TEST);
@@ -128,7 +128,7 @@ void DrawBase() {
 
 void DrawMesh() {
 	if (!revolve) {
-		glBegin(GL_LINE_STRIP);
+		glBegin(GL_LINE_STRIP );
 		for (int i = 0; i<NoOfPts; i++)
 			glVertex3f(base[i].x, base[i].y, base[i].z);
 		glEnd();
@@ -191,7 +191,7 @@ void myMouse(int button, int state, int x, int y) {
 	mouseY = y;
 
 	int mod = glutGetModifiers();
-	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
+	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN && !revolve) {
 		int ry = screenHeight - y;
 		base.push_back(Point3(x*worldWidth / (float)screenWidth - worldWidth / 2,
 			ry*worldHeight / (float)screenHeight - worldHeight / 2,
