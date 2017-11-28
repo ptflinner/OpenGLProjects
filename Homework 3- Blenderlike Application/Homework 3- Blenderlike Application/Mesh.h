@@ -22,7 +22,11 @@ public:
 	~Face() { delete[] vert; nVerts = 0; } // destructor
 };
 
+//##################### SURFACE ################
+class Surface {
+public:
 
+};
 //###################### Mesh #######################
 class Mesh {
 private:

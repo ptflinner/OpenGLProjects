@@ -60,7 +60,7 @@ void myInit()
 {
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);  // background is black
 	cam.setShape(50.0f, (float)screenWidth / screenHeight, 0.5f, 200.0f);// set the view volume shape ----
-	cam.set(Point3(0, 4, 4), Point3(0, 4, 0), Vector3(0, 1, 0));
+	cam.set(Point3(4, 4, 4), Point3(0, 0, 0), Vector3(0, 1, 0));
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
 	glEnable(GL_DEPTH_TEST);
