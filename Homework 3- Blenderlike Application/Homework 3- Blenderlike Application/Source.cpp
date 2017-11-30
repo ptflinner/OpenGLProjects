@@ -171,12 +171,12 @@ void mySpecialKeyboard(int theKey, int mouseX, int mouseY)
 	switch (theKey) {
 	case GLUT_KEY_PAGE_UP:		// slide camera forward
 		std::cout << "Camera zoom-in" << std::endl;
-		cam.slide(0, 0, -0.2);
+
 		break;
 	case GLUT_KEY_PAGE_DOWN:
 		// slide camera backward
 		std::cout << "Camera zoom-out" << std::endl;
-		cam.slide(0, 0, 0.2);
+	
 		break;
 	default:
 		break;
@@ -204,8 +204,13 @@ void myMouse(int button, int state, int x, int y) {
 	if (button == GLUT_MIDDLE_BUTTON && state == GLUT_DOWN) {
 		dragCamera = true;
 		panCamera = false;
+		zoomCamera = false;
 		if (mod == GLUT_ACTIVE_SHIFT) {
 			panCamera = true;
+		}
+		else if (mod == GLUT_ACTIVE_CTRL) {
+			std::cout << "PURPLE" << std::endl;
+			zoomCamera = true;
 		}
 	}
 	if (button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN) {
@@ -215,15 +220,6 @@ void myMouse(int button, int state, int x, int y) {
 	glutPostRedisplay();
 }
 
-void myMouseWheel(int wheel, int direction, int x, int y) {
-	wheel = 0;
-	if (direction == -1) {
-
-	}
-	else if (direction == 1) {
-
-	}
-}
 void DragMotion(int x, int y) {
 	double newX = (x - mouseX);
 	double newY = (y - mouseY);
@@ -253,10 +249,20 @@ void DragMotion(int x, int y) {
 	
 		cam.slide(-newX/10, newY/10, 0);
 	}
+	else if (dragCamera && zoomCamera) {
+		std::cout << "DA" << std::endl;
+		if (newY<0) {
+			cam.slide(0, 0, 0.2);
+		}
+		else if (newY > 0) {
+			cam.slide(0, 0, -0.2);
+		}
+	}
 	else if (dragCamera && !panCamera) {
 		camRotateX -= newX;
 		camRotateY += newY;
 	}
+	
 
 }
 

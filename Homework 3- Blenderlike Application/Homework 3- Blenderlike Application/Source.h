@@ -28,6 +28,7 @@ Camera cam; // global camera object
 //Camera Controls
 bool panCamera = false;
 bool dragCamera = false;
+bool zoomCamera = false;
 GLfloat camRotateX=0;
 GLfloat camRotateY=0;
 #endif
