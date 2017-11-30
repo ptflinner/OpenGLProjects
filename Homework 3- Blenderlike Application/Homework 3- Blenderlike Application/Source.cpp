@@ -12,7 +12,7 @@
 #include <iostream>
 #include <vector>
 #include "Source.h"
-#include "Mesh.h"
+
 
 //***************PROTOTYPES***************
 void myInit();
@@ -20,6 +20,7 @@ void myDisplay(void);
 void DrawAxis();
 void DrawBase();
 void DrawMesh();
+void DrawLine();
 void moveCamera(void);
 void myKeyboard(unsigned char key, int x, int y);
 void mySpecialKeyboard(int theKey, int mouseX, int mouseY);
@@ -60,7 +61,7 @@ void myInit()
 {
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);  // background is black
 	cam.setShape(50.0f, (float)screenWidth / screenHeight, 0.5f, 200.0f);// set the view volume shape ----
-	cam.set(Point3(0, 2, 4), Point3(0, 2, 0), Vector3(0, 1, 0));
+	cam.set(Point3(0, 0, 20), Point3(0, 0, 0), Vector3(0, 1, 0));
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
 	glEnable(GL_DEPTH_TEST);
@@ -81,14 +82,18 @@ void myDisplay(void)
 	glDisable(GL_LIGHTING);
 	glDisable(GL_LIGHT0);
 	DrawAxis();
-
-
+	
+	if (!revolve) {
+		DrawLine();
+	}
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
 	DrawBase();
 	glLightfv(GL_LIGHT0, GL_POSITION, litePos);
-	DrawMesh();
-	
+	if (revolution.ready2draw) {
+		DrawMesh();
+	}
+
 	glPopMatrix();
 	glutSwapBuffers();
 }
@@ -127,14 +132,16 @@ void DrawBase() {
 }
 
 void DrawMesh() {
-	if (!revolve) {
-		glBegin(GL_LINE_STRIP );
-		for (int i = 0; i<NoOfPts; i++)
-			glVertex3f(base[i].x, base[i].y, base[i].z);
-		glEnd();
-	}
+	revolution.drawSolid();
 }
 
+void DrawLine() {
+	glColor3f(1.0f, 1.0f, 1.0f);
+	glBegin(GL_LINE_STRIP );
+	for (int i = 0; i<NoOfPts; i++)
+		glVertex3f(base[i].x, base[i].y, base[i].z);
+	glEnd();
+}
 void moveCamera(void) {
 
 }
@@ -192,6 +199,9 @@ void myMouse(int button, int state, int x, int y) {
 
 	int mod = glutGetModifiers();
 	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN && !revolve) {
+		dragCamera = false;
+		zoomCamera = false;
+		panCamera = false;
 		int ry = screenHeight - y;
 		base.push_back(Point3(x*worldWidth / (float)screenWidth - worldWidth / 2,
 			ry*worldHeight / (float)screenHeight - worldHeight / 2,
@@ -214,7 +224,14 @@ void myMouse(int button, int state, int x, int y) {
 		}
 	}
 	if (button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN) {
+		dragCamera = false;
+		zoomCamera = false;
+		panCamera = false;
 		revolve = true;
+
+		if (!revolution.ready2draw) {
+			revolution.createRevolution(base, 8);
+		}
 	}
 
 	glutPostRedisplay();

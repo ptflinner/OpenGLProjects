@@ -4,7 +4,8 @@
 
 #include "Point3.h"
 #include "Vector3.h"
-
+#include <vector>
+#define PI 3.1415
 //################# VertexID ###################
 class VertexID {
 public:
@@ -36,15 +37,16 @@ private:
 	Vector3 *norm;    // array of normals 
 	int numFaces; 	// number of faces in the mesh
 	Face* face;	      // array of face data
-
+	int centerX;
+	int centerY;
 public:
 	int ready2draw;
 	Mesh();
 	~Mesh();
 
-	void initPrism(int noVerts);
-	void createPrism(int noVerts, Point3 *p, float length);
+	void createFaces(int noVerts, Point3 *p, float length);
 	void drawWireframe();
 	void drawSolid();
-
+	void createRevolution(std::vector<Point3> base,int noVerts);
+	void initRev(int initSize, int noVerts);
 };

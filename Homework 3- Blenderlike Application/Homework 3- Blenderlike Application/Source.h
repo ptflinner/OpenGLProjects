@@ -6,6 +6,7 @@
 #define SOURCE_H
 
 #include "Camera.h"
+#include "Mesh.h"
 
 //Global Variables
 const int screenWidth = 500;	   // width of screen window in pixels
@@ -21,6 +22,7 @@ GLfloat mouseY = 0;
 int NoOfPts = 0;
 int displayMode = 0;
 std::vector<Point3> base;
+Mesh revolution;
 bool revolve = false;
 
 Camera cam; // global camera object
