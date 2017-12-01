@@ -1,4 +1,5 @@
 //Patrick Flinner
+//304607711
 //Homework 3
 //November 30, 2017
 
@@ -39,6 +40,7 @@ private:
 	Face* face;	      // array of face data
 	int centerX;
 	int centerY;
+	int material;
 public:
 	int ready2draw;
 	Mesh();
@@ -52,4 +54,7 @@ public:
 	void CalculateFaceVerts(int bSize, int noVerts);
 	void CalculateFaceNorms(int bSize, int noVerts);
 	void initRev(int initSize, int noVerts);
+	Point3 Focus();
+	void ChangeMaterial();
+	void Material();
 };

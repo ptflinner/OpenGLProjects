@@ -1,4 +1,5 @@
 //Patrick Flinner
+//304607711
 //Homework 3
 //November 30, 2017
 
@@ -77,6 +78,11 @@ void Camera::yaw(float angle)
 	setModelViewMatrix();
 }
 
+float Camera::distance()
+{
+	return sqrt(pow((eye.x), 2) + pow((eye.y), 2) + pow((eye.z), 2));
+}
+
 void Camera::pitch(float angle)
 { // pitch the camera through angle degrees
 	float cs = (float)cos(3.14159265 / 180 * angle);
@@ -94,3 +100,4 @@ void Camera::setShape(float vAng, float asp, float nearD, float farD)
 	glLoadIdentity();
 	gluPerspective(vAng, asp, nearD, farD);
 }
+

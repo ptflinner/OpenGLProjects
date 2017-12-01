@@ -1,6 +1,7 @@
 //Patrick Flinner
-//Lab 9
-//October 31, 2017
+//304607711
+//Homework 3
+//November 30, 2017
 
 //Lab: Camera Control
 #pragma once
@@ -53,6 +54,8 @@ int main(int argc, char **argv)
 }
 
 void myIdle() {
+	
+	if(animate)camRotateX += 1;
 	glutPostRedisplay();
 }
 
@@ -146,23 +149,30 @@ void moveCamera(void) {
 //***************INPUT FUNCTIONS***************
 void myKeyboard(unsigned char key, int x, int y)
 {
-	
+	Point3 point = revolution.Focus();
 	switch (key) {
-	case 'E':
-	case 'e':
+	case 'C':
+	case 'c':
 		cam.set(Point3(0, 0, 20), Point3(0, 0, 0), Vector3(0, 1, 0));
 		revolve = false;
 		NoOfPts = 0;
 		base.clear();
+		revolution = Mesh();
+		camRotateX = 0;
+		camRotateY = 0;
 		break;
 	case 'F':
 	case 'f':
+		
+		cam.set(Point3(point.x + 3, point.y + 3, point.z + 3), Point3(0, point.y, 0), Vector3(0, 1, 0));
 		break;
 	case 'G':
 	case 'g':
+		revolution.ChangeMaterial();
 		break;
 	case 'M':
 	case 'm':
+		animate = !animate;
 		break;
 	default:
 		break;
@@ -190,7 +200,7 @@ void mySpecialKeyboard(int theKey, int mouseX, int mouseY)
 }
 
 void myMouse(int button, int state, int x, int y) {
-
+	animate = false;
 	//Transfers mouse coordinate to window coordinate
 	mouseX = x;
 	mouseY = y;
@@ -201,8 +211,9 @@ void myMouse(int button, int state, int x, int y) {
 		zoomCamera = false;
 		panCamera = false;
 		int ry = screenHeight - y;
-		base.push_back(Point3(x*worldWidth / (float)screenWidth - worldWidth / 2,
-			ry*worldHeight / (float)screenHeight - worldHeight / 2,
+		float distance = cam.distance();
+		base.push_back(Point3(x*distance / (float)screenWidth - distance / 2,
+			ry*distance / (float)screenHeight - distance / 2,
 			0));
 		NoOfPts++;
 
@@ -217,7 +228,6 @@ void myMouse(int button, int state, int x, int y) {
 			panCamera = true;
 		}
 		else if (mod == GLUT_ACTIVE_CTRL) {
-			std::cout << "PURPLE" << std::endl;
 			zoomCamera = true;
 		}
 	}

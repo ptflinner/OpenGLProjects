@@ -1,4 +1,5 @@
 //Patrick Flinner
+//304607711
 //Homework 3
 //November 30, 2017
 
@@ -31,6 +32,7 @@ Camera cam; // global camera object
 bool panCamera = false;
 bool dragCamera = false;
 bool zoomCamera = false;
+bool animate = false;
 GLfloat camRotateX=0;
 GLfloat camRotateY=0;
 #endif

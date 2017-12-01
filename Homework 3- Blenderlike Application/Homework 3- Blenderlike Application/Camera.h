@@ -1,4 +1,5 @@
 //Patrick Flinner
+//304607711
 //Homework 3
 //November 30, 2017
 
@@ -24,6 +25,7 @@ public:
 	void setShape(float vAng, float asp, float nearD, float farD);
 	void pitch(float angle); // increase pitch
 	void yaw(float angle); // yaw it
+	float distance();
 };
 
 #endif
