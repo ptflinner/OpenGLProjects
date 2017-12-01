@@ -14,7 +14,7 @@ const int screenHeight = 500;	   // height of screen window in pixels
 const float worldWidth = 20.0;
 const float worldHeight = 20.0;
 GLfloat lightIntensity[] = { 0.7f, 0.7f, 0.7f, 1.0f };
-GLfloat litePos[] = { 0.0f, 5.0f, 0.0f, 0.0f };
+GLfloat litePos[] = { 0.0f, 20.0f, 0.0f, 0.0f };
 GLfloat mouseX = 0;
 GLfloat mouseY = 0;
 

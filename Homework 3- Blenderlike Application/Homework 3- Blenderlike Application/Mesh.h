@@ -44,9 +44,12 @@ public:
 	Mesh();
 	~Mesh();
 
-	void createFaces(int noVerts, Point3 *p, float length);
 	void drawWireframe();
 	void drawSolid();
 	void createRevolution(std::vector<Point3> base,int noVerts);
+	void CalculateNormal(int bSize,int noVerts);
+	void CalculateVerts(std::vector<Point3> base,int noVerts);
+	void CalculateFaceVerts(int bSize, int noVerts);
+	void CalculateFaceNorms(int bSize, int noVerts);
 	void initRev(int initSize, int noVerts);
 };
