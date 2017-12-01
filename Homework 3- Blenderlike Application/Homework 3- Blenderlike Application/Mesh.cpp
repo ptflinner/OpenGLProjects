@@ -34,7 +34,14 @@ void Mesh::drawSolid() // use OpenGL to draw this mesh
 	if (ready2draw) {
 		for (int f = 0; f < numFaces; f++) // draw each face
 		{
-			glColor3f(f / (float)10, f / (float)10, f / (float)10);
+			GLfloat specular[] = { .628281, 0.555802f, 0.366065f, 1.0f };
+			GLfloat ambient[] = { 0.24725f, 0.1995f, 0.0745f, 1.0f };
+			GLfloat diffuse[] = { 0.75164f, 0.60648f, 0.22648f, 1.0f };
+			GLfloat shiny[] = { .4f * 128 };
+			glMaterialfv(GL_FRONT, GL_AMBIENT, ambient);
+			glMaterialfv(GL_FRONT, GL_DIFFUSE, diffuse);
+			glMaterialfv(GL_FRONT, GL_SPECULAR, specular);
+			glMaterialfv(GL_FRONT, GL_SHININESS, shiny);
 			glBegin(GL_POLYGON);
 			for (int v = 0; v < face[f].nVerts; v++) // for each one..
 			{
@@ -56,36 +63,44 @@ void Mesh::createRevolution(std::vector<Point3> base, int noVerts)
 	// create the vertex list
 	for (int i = 0; i < base.size(); i++) {
 		for (int j = 0; j < noVerts; j++) {
-			pt[noVerts*i+j] = Point3(centerX + base[i].x * cos(2 * PI*i), base[i].y, centerY + base[i].x * sin(2 * PI*i));
+			double t = j;
+			t /= (noVerts - 1);
+			pt[noVerts*i+j] = Point3(centerX + sqrt(base[i].x*base[i].x) * cos(2 * PI*t), base[i].y, centerY + sqrt(base[i].x*base[i].x) * sin(2 * PI*t));
+			std::cout << pt[noVerts*i + j];
 		}
 	}
 
 	// create side faces
 
-	for (int i = 0; i < noVerts; i++) {
-		face[i].nVerts = 4;
-		face[i].vert = new VertexID[4];
-		if (i < noVerts - 1) {
-			face[i].vert[0].vertIndex = i;
-			face[i].vert[1].vertIndex = i + 1;
-			face[i].vert[2].vertIndex = i + numFaces + 1;
-			face[i].vert[3].vertIndex = i + numFaces;
-		}
-		else {
-		face[i].vert[0].vertIndex = i;
-		face[i].vert[1].vertIndex = 0;
-		face[i].vert[2].vertIndex = 0 + 3;
-		face[i].vert[3].vertIndex = i + 3;
+	std::cout << numFaces << std::endl;
+	for (int i = 0; i < base.size(); i++) {
+		for (int j = 0; j < noVerts;j++) {
+			int k = i*noVerts + j;
+			std::cout << k << std::endl;
+			face[k].nVerts = 4;
+			face[k].vert = new VertexID[4];
+			if (j < noVerts - 1) {
+
+				face[k].vert[0].vertIndex = i*noVerts;
+				face[k].vert[1].vertIndex = i*noVerts + j;
+				face[k].vert[2].vertIndex = i*noVerts + noVerts + j;
+				face[k].vert[3].vertIndex = i*noVerts + noVerts;
+			}
+			else {
+			face[k].vert[0].vertIndex = i*noVerts;
+			face[k].vert[1].vertIndex = 0;
+			face[k].vert[2].vertIndex = noVerts;
+			face[k].vert[3].vertIndex = i*noVerts + noVerts;
+			}
 		}
 	}
-
-	ready2draw = 1;
+	ready2draw = true;
 }
 
 void Mesh::initRev(int initSize, int noVerts)
 {
 	numVerts = initSize*noVerts;
-	numFaces = noVerts;
+	numFaces = noVerts*initSize/(initSize-1);
 	numNormals = noVerts;
 
 	pt = new Point3[numVerts];

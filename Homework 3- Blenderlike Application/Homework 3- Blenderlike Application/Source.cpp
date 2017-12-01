@@ -25,7 +25,6 @@ void moveCamera(void);
 void myKeyboard(unsigned char key, int x, int y);
 void mySpecialKeyboard(int theKey, int mouseX, int mouseY);
 void myMouse(int button, int state, int x, int y);
-void myMouseWheel(int wheel, int direction, int x, int y);
 void DragMotion(int x, int y);
 void myIdle();
 void Print();
@@ -86,9 +85,10 @@ void myDisplay(void)
 	if (!revolve) {
 		DrawLine();
 	}
+	DrawBase();
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
-	DrawBase();
+	
 	glLightfv(GL_LIGHT0, GL_POSITION, litePos);
 	if (revolution.ready2draw) {
 		DrawMesh();
@@ -114,17 +114,15 @@ void DrawAxis() {
 }
 
 void DrawBase() {
-	
+	glColor3f(.3, .3, .3);
 	for (int i = -20; i < 20; i++) {
 		glBegin(GL_LINES);
-		glColor3f(1, 1, 1);
 		glVertex3f(i, 0, -20);
 		glVertex3f(i, 0, 20);
 		glEnd();
 	}
 	for (int i = -20; i < 20; i++) {
 		glBegin(GL_LINES);
-		glColor3f(1, 1, 1);
 		glVertex3f(-20, 0, i);
 		glVertex3f(20, 0, i);
 		glEnd();
@@ -152,7 +150,7 @@ void myKeyboard(unsigned char key, int x, int y)
 	switch (key) {
 	case 'E':
 	case 'e':
-		cam.set(Point3(4, 4, 4), Point3(0, 0, 0), Vector3(0, 1, 0));
+		cam.set(Point3(0, 0, 20), Point3(0, 0, 0), Vector3(0, 1, 0));
 		revolve = false;
 		NoOfPts = 0;
 		base.clear();
